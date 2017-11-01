@@ -223,7 +223,7 @@ type TracingData struct {
 	Reason       string `json:"Reason,omitempty"`                         // 失败原因
 	State        string `json:"State"`                                    // 物流状态: 0-无轨迹 2-在途中 3-签收 4-问题件
 	CallBack     string `json:"CallBack,omitempty"`                       // 订阅接口的Bk值
-	Traces struct {
+	Traces []struct {
 		AcceptTime    string `json:"AcceptTime"`       // 时间
 		AcceptStation string `json:"AcceptStation"`    // 描述
 		Remark        string `json:"Remark,omitempty"` // 备注
@@ -262,11 +262,11 @@ func PushHandler(c *mel.Context, tracingHandler func([]TracingData)) {
 	switch req.RequestType {
 	case PushTracing:
 		data, err := url.QueryUnescape(req.RequestData)
-		var tracing struct{
-			EBusinessID string `json:"EBusinessID"`
-			PushTime string `json:"PushTime"`
-			Count int `json:"Count"`
-			Data []TracingData `json:"Data"`
+		var tracing struct {
+			EBusinessID string        `json:"EBusinessID"`
+			PushTime    string        `json:"PushTime"`
+			Count       int           `json:"Count"`
+			Data        []TracingData `json:"Data"`
 		}
 		if err == nil {
 			err = json.Unmarshal([]byte(data), &tracing)
@@ -276,14 +276,14 @@ func PushHandler(c *mel.Context, tracingHandler func([]TracingData)) {
 			return
 		}
 		tracingHandler(tracing.Data)
-		rep := struct{
+		rep := struct {
 			EBusinessID string `json:"EBusinessID"`
-			UpdateTime	string `json:"UpdateTime"`
-			Success	bool `json:"Success"`
+			UpdateTime  string `json:"UpdateTime"`
+			Success     bool   `json:"Success"`
 		}{
 			EBusinessID: tracing.EBusinessID,
-			UpdateTime: tracing.PushTime,
-			Success: true,
+			UpdateTime:  tracing.PushTime,
+			Success:     true,
 		}
 		c.JSON(200, &rep)
 	}
