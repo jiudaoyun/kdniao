@@ -260,7 +260,12 @@ func PushHandler(c *mel.Context, tracingHandler func(*TracingData)) {
 	switch req.RequestType {
 	case PushTracing:
 		data, err := url.QueryUnescape(req.RequestData)
-		var tracing TracingData
+		var tracing struct{
+			EBusinessID string `json:"EBusinessID"`
+			PushTime string `json:"PushTime"`
+			Count string `json:"Count"`
+			Data TracingData `json:"Data"`
+		}
 		if err == nil {
 			err = json.Unmarshal([]byte(data), &tracing)
 		}
@@ -268,7 +273,17 @@ func PushHandler(c *mel.Context, tracingHandler func(*TracingData)) {
 			c.AbortWithError(400, err).Type = mel.ErrorTypePrivate
 			return
 		}
-		tracingHandler(&tracing)
+		tracingHandler(&tracing.Data)
+		rep := struct{
+			EBusinessID string `json:"EBusinessID"`
+			UpdateTime	string `json:"UpdateTime"`
+			Success	bool `json:"Success"`
+		}{
+			EBusinessID: tracing.EBusinessID,
+			UpdateTime: tracing.PushTime,
+			Success: true,
+		}
+		c.JSON(200, &rep)
 	}
 }
 
