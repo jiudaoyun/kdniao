@@ -12,6 +12,8 @@ import (
 	"errors"
 	"github.com/ridewindx/mel"
 	"github.com/ridewindx/mel/binding"
+	"github.com/ridewindx/melware"
+	"go.uber.org/zap"
 )
 
 const (
@@ -291,10 +293,12 @@ type Server struct {
 	*mel.Mel
 }
 
-func NewServer(pushURL string, tracingHandler func(*TracingData)) *Server {
+func NewServer(pushURL string, tracingHandler func(*TracingData), logger *zap.SugaredLogger) *Server {
 	s := &Server{
 		Mel: mel.New(),
 	}
+
+	s.Use(melware.Zap(logger))
 
 	s.Post(pushURL, func(c *mel.Context) {
 		PushHandler(c, tracingHandler)
