@@ -265,7 +265,7 @@ func PushHandler(c *mel.Context, tracingHandler func(*TracingData)) {
 		var tracing struct{
 			EBusinessID string `json:"EBusinessID"`
 			PushTime string `json:"PushTime"`
-			Count string `json:"Count"`
+			Count int `json:"Count"`
 			Data TracingData `json:"Data"`
 		}
 		if err == nil {
