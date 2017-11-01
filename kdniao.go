@@ -247,7 +247,7 @@ type TracingData struct {
 	} `json:"SenderInfo,omitempty"`                                       // 派件员信息
 }
 
-func PushHandler(c *mel.Context, tracingHandler func(*TracingData)) {
+func PushHandler(c *mel.Context, tracingHandler func([]TracingData)) {
 	var req struct {
 		RequestType string
 		DataSign    string
@@ -266,7 +266,7 @@ func PushHandler(c *mel.Context, tracingHandler func(*TracingData)) {
 			EBusinessID string `json:"EBusinessID"`
 			PushTime string `json:"PushTime"`
 			Count int `json:"Count"`
-			Data TracingData `json:"Data"`
+			Data []TracingData `json:"Data"`
 		}
 		if err == nil {
 			err = json.Unmarshal([]byte(data), &tracing)
@@ -275,7 +275,7 @@ func PushHandler(c *mel.Context, tracingHandler func(*TracingData)) {
 			c.AbortWithError(400, err).Type = mel.ErrorTypePrivate
 			return
 		}
-		tracingHandler(&tracing.Data)
+		tracingHandler(tracing.Data)
 		rep := struct{
 			EBusinessID string `json:"EBusinessID"`
 			UpdateTime	string `json:"UpdateTime"`
@@ -293,7 +293,7 @@ type Server struct {
 	*mel.Mel
 }
 
-func NewServer(pushURL string, tracingHandler func(*TracingData), logger *zap.SugaredLogger) *Server {
+func NewServer(pushURL string, tracingHandler func([]TracingData), logger *zap.SugaredLogger) *Server {
 	s := &Server{
 		Mel: mel.New(),
 	}
