@@ -21,6 +21,25 @@ const (
 )
 
 const (
+	PayTypeSpot = 1 // 现付
+	PayTypeFreightCollect = 2 // 到付
+	PayTypeMonthly = 3 // 月结
+	PayTypeThirdpary = 4 // 第三方支付
+)
+
+const (
+	ExpTypeStandard = "1"
+)
+
+const (
+	StatusNone = "0" // 无轨迹
+	StatusTook = "1" // 已揽收
+	StatusInTransit = "2" // 在途中
+	StatusSignedFor = "3" // 签收
+	StatusProblemShipment = "4" // 问题件
+)
+
+const (
 	ReqCreateEOder = "1007"
 	ReqSubscribeTracing = "1008"
 
