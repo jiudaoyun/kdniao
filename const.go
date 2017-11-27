@@ -21,7 +21,7 @@ const (
 )
 
 const (
-	ReqCreateEOder = "1007"
+	ReqCreateEOder      = "1007"
 	ReqSubscribeTracing = "1008"
 
 	PushTracing = "101"
@@ -31,7 +31,7 @@ const (
 const (
 	ErrSuccess                = "100" // 成功
 	ErrInsufficientParameters = "101" // 缺少必要参数
-	ErrVerifyFailure          = "102" //	校验问题
+	ErrVerifyFailure          = "102" // 校验问题
 	ErrInvalidFormat          = "103" // 格式问题
 	ErrUserProblem            = "104" // 用户问题
 	ErrOtherError             = "105" // 其他错误
