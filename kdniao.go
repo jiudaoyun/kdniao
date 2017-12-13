@@ -90,7 +90,7 @@ type EOrderReq struct {
 	SendSite              string      `json:"SendSite"`     // 收件网点标识
 	ShipperCode           string      `json:"ShipperCode"`            // 快递公司编码
 	LogisticCode          string      `json:"LogisticCode"` // 快递单号
-	ThrOrderCode          string      `json:"ThrOrderCode"` // 第三方订单号
+	ThrOrderCode          string      `json:"ThrOrderCode,omitempty"` // 第三方订单号
 	OrderCode             string      `json:"OrderCode"`              // 订单编号
 	MonthCode             string      `json:"MonthCode"`    // 月结编码
 	PayType               string      `json:"PayType"`                // 邮费支付方式: 1-现付，2-到付，3-月结，4-第三方支付
@@ -109,8 +109,8 @@ type EOrderReq struct {
 	AddService            *AddService  `json:"AddService,omitempty"`
 	Commodity             []Commodity `json:"Commodity"`
 	IsReturnPrintTemplate string      `json:"IsReturnPrintTemplate"` // 返回电子面单模板：0-不需要；1-需要
-	IsSendMessage         string         `json:"IsSendMessage"`         // 是否订阅短信：0-不需要；1-需要
-	TemplateSize          string      `json:"TemplateSize"`          // 模板尺寸
+	IsSendMessage         string         `json:"IsSendMessage,omitempty"`         // 是否订阅短信：0-不需要；1-需要
+	TemplateSize          string      `json:"TemplateSize,omitempty"`          // 模板尺寸
 }
 
 type EOrderRep struct {
