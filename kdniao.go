@@ -152,6 +152,8 @@ func (c *Client) CreateEOrder(order *EOrderReq) (*EOrderRep, error) {
 
 	req := c.makeReq(ReqCreateEOder, string(data))
 
+	fmt.Printf("request: %s\n", req.Encode())
+
 	var result EOrderRep
 	err = c.post("/eorderservice", req, &result)
 	if err != nil {
@@ -196,7 +198,7 @@ func (c *Client) makeReq(reqType, reqData string) url.Values {
 	vals.Set("EBusinessID", c.EBusinessID)
 	vals.Set("RequestType", reqType)
 	vals.Set("DataSign", c.dataSign(reqData))
-	vals.Set("RequestData", url.QueryEscape(string(reqData)))
+	vals.Set("RequestData", url.QueryEscape(reqData))
 	vals.Set("DataType", "2")
 	return vals
 }
