@@ -207,7 +207,7 @@ func (c *Client) dataSign(data string) string {
 	m := md5.New()
 	io.WriteString(m, string(data))
 	io.WriteString(m, c.AppKey)
-	return url.QueryEscape(base64.StdEncoding.EncodeToString(m.Sum(nil)))
+	return base64.StdEncoding.EncodeToString(m.Sum(nil))
 }
 
 func (c *Client) post(relativeURL string, req url.Values, rep interface{}) error {
