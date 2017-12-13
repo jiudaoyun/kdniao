@@ -197,6 +197,7 @@ func (c *Client) makeReq(reqType, reqData string) url.Values {
 	vals.Set("RequestType", reqType)
 	vals.Set("DataSign", c.dataSign(reqData))
 	vals.Set("RequestData", url.QueryEscape(string(reqData)))
+	vals.Set("DataType", "2")
 	return vals
 }
 
