@@ -107,7 +107,7 @@ type EOrderReq struct {
 	Volume                string     `json:"Volume,omitempty"`   // 物品总体积m3
 	Remark                string     `json:"Remark,omitempty"`   // 备注
 	AddService            AddService `json:"AddService,omitempty"`
-	Commodity             Commodity  `json:"Commodity"`
+	Commodity             []Commodity  `json:"Commodity"`
 	IsReturnPrintTemplate string     `json:"IsReturnPrintTemplate,omitempty"` // 返回电子面单模板：0-不需要；1-需要
 	IsSendMessage         int        `json:"IsSendMessage,omitempty"`         // 是否订阅短信：0-不需要；1-需要
 	TemplateSize          string     `json:"TemplateSize,omitempty"`          // 模板尺寸
