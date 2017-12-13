@@ -74,12 +74,12 @@ type AddService struct {
 
 type Commodity struct {
 	GoodsName     string  `json:"GoodsName"`               // 商品名称
-	GoodsCode     string  `json:"GoodsCode,omitempty"`     // 商品编码
-	Goodsquantity string     `json:"Goodsquantity,omitempty"` // 件数
-	GoodsPrice    string `json:"GoodsPrice,omitempty"`    // 商品价格
-	GoodsWeight   string `json:"GoodsWeight,omitempty"`   // 商品重量kg
-	GoodsDesc     string  `json:"GoodsDesc,omitempty"`     // 商品描述
-	GoodsVol      string `json:"GoodsVol,omitempty"`      // 商品体积m3
+	GoodsCode     string  `json:"GoodsCode"`     // 商品编码
+	Goodsquantity string     `json:"Goodsquantity"` // 件数
+	GoodsPrice    string `json:"GoodsPrice"`    // 商品价格
+	GoodsWeight   string `json:"GoodsWeight"`   // 商品重量kg
+	GoodsDesc     string  `json:"GoodsDesc"`     // 商品描述
+	GoodsVol      string `json:"GoodsVol"`      // 商品体积m3
 }
 
 type EOrderReq struct {
