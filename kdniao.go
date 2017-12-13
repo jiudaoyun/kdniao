@@ -204,12 +204,12 @@ func (c *Client) makeReq(reqType, reqData string) url.Values {
 }
 
 func (c *Client) dataSign(data string) string {
-	m := md5.New()
+	// m := md5.New()
 	// io.WriteString(m, string(data))
 	// io.WriteString(m, c.AppKey)
 	data = data + c.AppKey
 	fmt.Printf("sign: %s\n", data)
-	return base64.StdEncoding.EncodeToString(m.Sum([]byte(data)))
+	return base64.StdEncoding.EncodeToString(md5.Sum([]byte(data))[:])
 }
 
 func (c *Client) post(relativeURL string, req url.Values, rep interface{}) error {
