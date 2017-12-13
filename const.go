@@ -21,10 +21,10 @@ const (
 )
 
 const (
-	PayTypeSpot = 1 // 现付
-	PayTypeFreightCollect = 2 // 到付
-	PayTypeMonthly = 3 // 月结
-	PayTypeThirdpary = 4 // 第三方支付
+	PayTypeSpot = "1" // 现付
+	PayTypeFreightCollect = "2" // 到付
+	PayTypeMonthly = "3" // 月结
+	PayTypeThirdpary = "4" // 第三方支付
 )
 
 const (
