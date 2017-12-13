@@ -6,7 +6,7 @@ import (
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/json"
-	"io"
+	// "io"
 	"strings"
 	"fmt"
 	"errors"
