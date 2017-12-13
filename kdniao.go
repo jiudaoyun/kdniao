@@ -75,11 +75,11 @@ type AddService struct {
 type Commodity struct {
 	GoodsName     string  `json:"GoodsName"`               // 商品名称
 	GoodsCode     string  `json:"GoodsCode,omitempty"`     // 商品编码
-	Goodsquantity int     `json:"Goodsquantity,omitempty"` // 件数
-	GoodsPrice    float64 `json:"GoodsPrice,omitempty"`    // 商品价格
-	GoodsWeight   float64 `json:"GoodsWeight,omitempty"`   // 商品重量kg
+	Goodsquantity string     `json:"Goodsquantity,omitempty"` // 件数
+	GoodsPrice    string `json:"GoodsPrice,omitempty"`    // 商品价格
+	GoodsWeight   string `json:"GoodsWeight,omitempty"`   // 商品重量kg
 	GoodsDesc     string  `json:"GoodsDesc,omitempty"`     // 商品描述
-	GoodsVol      float64 `json:"GoodsVol,omitempty"`      // 商品体积m3
+	GoodsVol      string `json:"GoodsVol,omitempty"`      // 商品体积m3
 }
 
 type EOrderReq struct {
@@ -96,20 +96,20 @@ type EOrderReq struct {
 	PayType               string      `json:"PayType"`                // 邮费支付方式: 1-现付，2-到付，3-月结，4-第三方支付
 	ExpType               string      `json:"ExpType"`                // 快递类型：1-标准快件
 	IsNotice              string      `json:"IsNotice"`     // 是否通知快递员上门揽件：0-通知；1-不通知；不填则默认为1
-	Cost                  float64     `json:"Cost"`         // 寄件费（运费）
-	OtherCost             float64     `json:"OtherCost"`    // 其他费用
+	Cost                  string     `json:"Cost"`         // 寄件费（运费）
+	OtherCost             string     `json:"OtherCost"`    // 其他费用
 	Receiver              Receiver    `json:"Receiver"`
 	Sender                Sender      `json:"Sender"`
 	StartDate             string      `json:"StartDate"` // 上门取货时间段: "yyyy-MM-dd HH:mm:ss"格式化，本文中所有时间格式相同
 	EndDate               string      `json:"EndDate"`
-	Weight                float64     `json:"Weight"`   // 物品总重量kg
-	Quantity              int         `json:"Quantity"` // 件数/包裹数
+	Weight                string     `json:"Weight"`   // 物品总重量kg
+	Quantity              string         `json:"Quantity"` // 件数/包裹数
 	Volume                string      `json:"Volume"`   // 物品总体积m3
 	Remark                string      `json:"Remark"`   // 备注
-	AddService            *AddService  `json:"AddService"`
+	AddService            *AddService  `json:"AddService,omitempty"`
 	Commodity             []Commodity `json:"Commodity"`
 	IsReturnPrintTemplate string      `json:"IsReturnPrintTemplate"` // 返回电子面单模板：0-不需要；1-需要
-	IsSendMessage         int         `json:"IsSendMessage"`         // 是否订阅短信：0-不需要；1-需要
+	IsSendMessage         string         `json:"IsSendMessage"`         // 是否订阅短信：0-不需要；1-需要
 	TemplateSize          string      `json:"TemplateSize"`          // 模板尺寸
 }
 
