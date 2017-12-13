@@ -14,6 +14,7 @@ import (
 	"github.com/ridewindx/mel/binding"
 	"github.com/ridewindx/melware"
 	"go.uber.org/zap"
+	"github.com/tomasen/realip"
 )
 
 const (
@@ -195,7 +196,7 @@ func (c *Client) makeReq(reqType, reqData string) url.Values {
 	vals.Set("EBusinessID", c.EBusinessID)
 	vals.Set("RequestType", reqType)
 	vals.Set("DataSign", c.dataSign(reqData))
-	vals.Set("RequestType", url.QueryEscape(string(reqData)))
+	vals.Set("RequestData", url.QueryEscape(string(reqData)))
 	return vals
 }
 
@@ -293,6 +294,34 @@ func PushHandler(c *mel.Context, tracingHandler func([]TracingData)) {
 	}
 }
 
+func PrintHandler(c *mel.Context, client *Client) {
+	var req []struct{
+		OrderID string `json:"OrderCode"`
+		PrintName string `json:"PortName"`
+	}
+	err := c.BindJSON(&req)
+	if err != nil {
+		c.AbortWithError(400, err).Type = mel.ErrorTypeBind
+		return
+	}
+	data, err := json.Marshal(req)
+	if err != nil {
+		c.AbortWithError(400, err).Type = mel.ErrorTypeBind
+		return
+	}
+
+	sign := client.dataSign(realip.RealIP(c.Request) + url.QueryEscape(string(data)))
+
+	rep := struct{
+		EID string `json:"eid"`
+		Signature string `json:"signature"`
+	}{
+		EID: client.EBusinessID,
+		Signature: sign,
+	}
+	c.JSON(200, &rep)
+}
+
 type Server struct {
 	*mel.Mel
 }
@@ -309,4 +338,10 @@ func NewServer(pushURL string, tracingHandler func([]TracingData), logger *zap.S
 	})
 
 	return s
+}
+
+func (s *Server) HandlePrint(printURL string, client *Client) {
+	s.Post(printURL, func(c *mel.Context) {
+		PrintHandler(c, client)
+	})
 }
