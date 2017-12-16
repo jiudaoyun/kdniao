@@ -321,6 +321,8 @@ func PrintHandler(c *mel.Context, client *Client) {
 		return
 	}
 
+	fmt.Printf("kdniao print, client ip: %s\n", realip.RealIP(c.Request))
+
 	sign := client.dataSign(realip.RealIP(c.Request) + url.QueryEscape(req.Data))
 
 	rep := struct {
@@ -328,7 +330,7 @@ func PrintHandler(c *mel.Context, client *Client) {
 		Signature string `json:"signature"`
 	}{
 		EID:       client.EBusinessID,
-		Signature: sign,
+		Signature: url.QueryEscape(sign),
 	}
 	c.JSON(200, &rep)
 }
