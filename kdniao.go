@@ -335,6 +335,10 @@ func NewServer(pushURL string, tracingHandler func([]TracingData), logger *zap.S
 
 	s.Use(melware.Zap(logger))
 
+	cors := melware.CorsAllowAll()
+	cors.AllowCredentials = false
+	s.Use(cors.Middleware())
+
 	s.Post(pushURL, func(c *mel.Context) {
 		PushHandler(c, tracingHandler)
 	})
