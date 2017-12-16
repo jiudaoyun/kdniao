@@ -297,7 +297,7 @@ func PushHandler(c *mel.Context, tracingHandler func([]TracingData)) {
 }
 
 func PrintHandler(c *mel.Context, client *Client) {
-	var req []struct {
+	/* var req []struct {
 		OrderID   string `json:"OrderCode"`
 		PrintName string `json:"PortName"`
 	}
@@ -310,9 +310,18 @@ func PrintHandler(c *mel.Context, client *Client) {
 	if err != nil {
 		c.AbortWithError(400, err).Type = mel.ErrorTypeBind
 		return
+	} */
+
+	var req struct{
+		Data string `json:"data"`
+	}
+	err := c.BindJSON(&req)
+	if err != nil {
+		c.AbortWithError(400, err).Type = mel.ErrorTypeBind
+		return
 	}
 
-	sign := client.dataSign(realip.RealIP(c.Request) + url.QueryEscape(string(data)))
+	sign := client.dataSign(realip.RealIP(c.Request) + url.QueryEscape(req.Data))
 
 	rep := struct {
 		EID       string `json:"eid"`
