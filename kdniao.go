@@ -152,7 +152,7 @@ func (c *Client) CreateEOrder(order *EOrderReq) (*EOrderRep, error) {
 
 	req := c.makeReq(ReqCreateEOder, string(data))
 
-	fmt.Printf("request: %s\n", req.Encode())
+	fmt.Printf("CreateEOrder request data: %s\n", req.Encode())
 
 	var result EOrderRep
 	err = c.post("/eorderservice", req, &result)
@@ -204,12 +204,7 @@ func (c *Client) makeReq(reqType, reqData string) url.Values {
 }
 
 func (c *Client) dataSign(data string) string {
-	// m := md5.New()
-	// io.WriteString(m, string(data))
-	// io.WriteString(m, c.AppKey)
-	data = data + c.AppKey
-	fmt.Printf("sign: %s\n", data)
-	m := fmt.Sprintf("%x", md5.Sum([]byte(data)))
+	m := fmt.Sprintf("%x", md5.Sum([]byte(data + c.AppKey)))
 	return base64.StdEncoding.EncodeToString([]byte(m))
 }
 
@@ -273,10 +268,11 @@ func PushHandler(c *mel.Context, tracingHandler func([]TracingData)) {
 	switch req.RequestType {
 	case PushTracing:
 		data, err := url.QueryUnescape(req.RequestData)
+		fmt.Printf("kdniao push tracing: %s\n", data)
 		var tracing struct {
 			EBusinessID string        `json:"EBusinessID"`
 			PushTime    string        `json:"PushTime"`
-			Count       int           `json:"Count"`
+			Count       string           `json:"Count"`
 			Data        []TracingData `json:"Data"`
 		}
 		if err == nil {
